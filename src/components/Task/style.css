@@ -1,0 +1,34 @@
+.oneTaskContainer {
+  height: 50px;
+  width: 90%;
+  margin: 15px;
+  display: flex;
+}
+.messageDateContainer {
+  height: 40px;
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+}
+.taskMessage {
+  font-weight: bold;
+  font-size: 14px;
+}
+.taskDate {
+  font-size: 14px;
+  color: red;
+}
+.taskButtonContainer {
+  display: flex;
+  margin-left: auto;
+}
+.editbutton {
+  margin: auto 10px;
+}
+.delcancel {
+  margin: auto;
+}
+.taskbutton {
+  height: 30px;
+  width: 30px;
+}

@@ -1,0 +1,164 @@
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getTasks,
+  postTasks,
+  putTasks,
+  deleteTasks,
+} from "../../redux/actions/tasks-action";
+import TaskList from "../../components/TaskList";
+import TaskInputs from "../../components/TaskInputs";
+import TaskEdit from "../../components/TaskEdit";
+import "./style.css";
+
+const TasksContainer = () => {
+  const taskData = useSelector(
+    (state) => state.TasksReducer.getTasksList.results
+  );
+  const loadingGet = useSelector(
+    (state) => state.TasksReducer.getTasksList.loading
+  );
+  const loadingPost = useSelector(
+    (state) => state.TasksReducer.postTasksList.loading
+  );
+  const loadingPut = useSelector(
+    (state) => state.TasksReducer.putTasksList.loading
+  );
+  const loadingDelete = useSelector(
+    (state) => state.TasksReducer.deleteTasksList.loading
+  );
+
+  const postMessage = useSelector(
+    (state) => state.TasksReducer.postTasksList.message
+  );
+  const putMessage = useSelector(
+    (state) => state.TasksReducer.putTasksList.message
+  );
+  const deleteMessage = useSelector(
+    (state) => state.TasksReducer.deleteTasksList.message
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getTasks());
+  }, [dispatch]);
+
+  const [taskList, setTaskList] = useState(null);
+  const [addTask, setAddTask] = useState(false);
+  const [editTask, setEditTask] = useState(false);
+
+  const [taskDescription, setTaskDescription] = useState("");
+  const [taskDate, setTaskDate] = useState("");
+  const [taskTime, setTaskTime] = useState("");
+  const [taskUser, setTaskUser] = useState("");
+  const [userId, setUserId] = useState("");
+
+  useEffect(() => {
+    setTaskList(taskData?.length > 0);
+  }, [taskData]);
+
+  useEffect(() => {
+    if (postMessage !== undefined) dispatch(getTasks());
+  }, [dispatch, postMessage]);
+
+  useEffect(() => {
+    if (putMessage !== undefined) dispatch(getTasks());
+  }, [dispatch, putMessage]);
+
+  useEffect(() => {
+    if (deleteMessage !== undefined) dispatch(getTasks());
+  }, [dispatch, deleteMessage]);
+
+  const handleAddTask = () => {
+    setAddTask(true);
+    setEditTask(false);
+    setTaskList(false);
+  };
+
+  const handleAddTaskCancel = () => {
+    setAddTask(false);
+    setEditTask(false);
+    setTaskList(taskData?.length > 0);
+  };
+
+  const handleEditTask = () => {
+    setEditTask(true);
+    setAddTask(false);
+    setTaskList(false);
+  };
+
+  const handleEditTaskCancel = () => {
+    setAddTask(false);
+    setEditTask(false);
+    setTaskList(taskData?.length > 0);
+  };
+
+  const handleDeleteTask = (id) => {
+    dispatch(deleteTasks(id));
+    setAddTask(false);
+    setEditTask(false);
+    setTaskList(taskData?.length > 0);
+  };
+
+  const handleAddANewTask = (obj) => {
+    dispatch(postTasks(obj));
+    setAddTask(false);
+    setEditTask(false);
+    setTaskList(taskData?.length > 0);
+  };
+
+  const handleEditANewTask = (id, obj) => {
+    dispatch(putTasks(id, obj));
+    setAddTask(false);
+    setEditTask(false);
+    setTaskList(taskData?.length > 0);
+  };
+  return (
+    <div className="tasksContainer">
+      <div className="tasksHeaderContainer">
+        <span className="tasksHeader">{`TASKS ${taskData?.length}`}</span>
+        <button className="plusButton" onClick={handleAddTask}>
+          +
+        </button>
+      </div>
+      {!loadingGet && !loadingPost && !loadingPut && !loadingDelete ? (
+        taskList ? (
+          <TaskList
+            setTaskDescription={setTaskDescription}
+            setTaskDate={setTaskDate}
+            setTaskTime={setTaskTime}
+            setTaskUser={setTaskUser}
+            listData={taskData}
+            handleEditTask={handleEditTask}
+            setUserId={setUserId}
+          />
+        ) : null
+      ) : (
+        <div className="loading">
+          <h1>Loading...</h1>
+        </div>
+      )}
+
+      {addTask ? (
+        <TaskInputs
+          handleAddANewTask={handleAddANewTask}
+          handleAddTaskCancel={handleAddTaskCancel}
+        />
+      ) : null}
+      {editTask ? (
+        <TaskEdit
+          taskDescription={taskDescription}
+          taskDate={taskDate}
+          taskTime={taskTime}
+          taskUser={taskUser}
+          userId={userId}
+          handleEditTaskCancel={handleEditTaskCancel}
+          handleDeleteTask={handleDeleteTask}
+          handleEditANewTask={handleEditANewTask}
+        />
+      ) : null}
+    </div>
+  );
+};
+
+export default TasksContainer;

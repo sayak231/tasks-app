@@ -4,11 +4,29 @@ import * as types from "../actions/action-types";
 const getTasksList = (state = { results: [] }, action) => {
   switch (action.type) {
     case types.GET_TASKS_FAIL:
-      return { ...state, message: action.message, status: action.status };
+      return {
+        ...state,
+        results: action.results,
+        message: action.message,
+        status: action.status,
+        loading: false,
+      };
     case types.GET_TASKS_SUCCESS:
-      return { ...state, results: action.results, status: action.status };
+      return {
+        ...state,
+        results: action.results,
+        message: action.message,
+        status: action.status,
+        loading: false,
+      };
     case types.GET_TASKS:
-      return { ...state, results: action.results, status: action.status };
+      return {
+        ...state,
+        results: action.results,
+        message: action.message,
+        status: action.status,
+        loading: true,
+      };
     default:
       return { ...state };
   }
@@ -17,11 +35,29 @@ const getTasksList = (state = { results: [] }, action) => {
 const postTasksList = (state = { results: [] }, action) => {
   switch (action.type) {
     case types.POST_TASKS_FAIL:
-      return { ...state, results: action.results, status: action.status };
+      return {
+        ...state,
+        results: action.results,
+        message: action.message,
+        status: action.status,
+        loading: false,
+      };
     case types.POST_TASKS_SUCCESS:
-      return { ...state, results: action.results, status: action.status };
+      return {
+        ...state,
+        results: action.results,
+        message: action.message,
+        status: action.status,
+        loading: false,
+      };
     case types.POST_TASKS:
-      return { ...state, results: action.results, status: action.status };
+      return {
+        ...state,
+        results: action.results,
+        message: action.message,
+        status: action.status,
+        loading: true,
+      };
     default:
       return { ...state };
   }
@@ -30,11 +66,29 @@ const postTasksList = (state = { results: [] }, action) => {
 const putTasksList = (state = { results: [] }, action) => {
   switch (action.type) {
     case types.PUT_TASKS_FAIL:
-      return { ...state, results: action.results, status: action.status };
+      return {
+        ...state,
+        results: action.results,
+        message: action.message,
+        status: action.status,
+        loading: false,
+      };
     case types.PUT_TASKS_SUCCESS:
-      return { ...state, results: action.results, status: action.status };
+      return {
+        ...state,
+        results: action.results,
+        message: action.message,
+        status: action.status,
+        loading: false,
+      };
     case types.PUT_TASKS:
-      return { ...state, results: action.results, status: action.status };
+      return {
+        ...state,
+        results: action.results,
+        message: action.message,
+        status: action.status,
+        loading: true,
+      };
     default:
       return { ...state };
   }
@@ -43,11 +97,26 @@ const putTasksList = (state = { results: [] }, action) => {
 const deleteTasksList = (state = { results: [] }, action) => {
   switch (action.type) {
     case types.DELETE_TASKS_FAIL:
-      return { ...state, results: action.results, status: action.status };
+      return {
+        ...state,
+        message: action.message,
+        status: action.status,
+        loading: false,
+      };
     case types.DELETE_TASKS_SUCCESS:
-      return { ...state, results: action.results, status: action.status };
+      return {
+        ...state,
+        message: action.message,
+        status: action.status,
+        loading: false,
+      };
     case types.DELETE_TASKS:
-      return { ...state, results: action.results, status: action.status };
+      return {
+        ...state,
+        message: action.message,
+        status: action.status,
+        loading: true,
+      };
     default:
       return { ...state };
   }

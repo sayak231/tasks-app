@@ -9,12 +9,13 @@ export const postTasks = (data) => ({
   data: data,
 });
 
-export const putTasks = (data) => ({
+export const putTasks = (id, data) => ({
   type: types.PUT_TASKS,
   data: data,
+  id: id,
 });
 
-export const deleteTasks = (data) => ({
+export const deleteTasks = (id) => ({
   type: types.DELETE_TASKS,
-  data: data,
+  id: id,
 });

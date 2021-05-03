@@ -1,0 +1,31 @@
+.tasksContainer {
+  height: auto;
+  width: 35%;
+  margin-left: 2vw;
+  border: 1px solid #e0e0e0;
+}
+.tasksHeaderContainer {
+  height: 6vh;
+  width: 100%;
+  display: flex;
+  background-color: rgb(246 246 246);
+}
+.loading {
+  margin: "auto";
+}
+.tasksHeader {
+  padding-left: 15px;
+  padding-top: 7.5px;
+  width: 90%;
+}
+.plusButton {
+  border-left: 1px solid #e0e0e0;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  background-color: rgb(246 246 246);
+  width: 10%;
+  font-size: 25px;
+  color: #8c8c8c;
+  cursor: pointer;
+}

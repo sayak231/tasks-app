@@ -1,23 +1,12 @@
 import "./App.css";
-import Tasks from "./components/Tasks";
+import TasksContainer from "./containers/TasksContainer";
 
 function App() {
   return (
-    <div style={{ width: "100%", height: "100vh", display: "flex" }}>
-      <nav
-        style={{ width: "10%", height: "100%", backgroundColor: "blueviolet" }}
-      />
-      <div
-        style={{
-          width: "90%",
-          height: "100%",
-          backgroundColor: "white",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
-        <Tasks />
+    <div className="appContainer">
+      <nav className="leftBar" />
+      <div className="content">
+        <TasksContainer />
       </div>
     </div>
   );

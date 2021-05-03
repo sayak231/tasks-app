@@ -1,22 +1,30 @@
 import React, { useState } from "react";
-import "./style.css";
 
-const TaskInputs = ({ handleAddTaskCancel, handleAddANewTask }) => {
-  const [addDataObject, setAddDataObject] = useState({
-    assigned_user: "prem",
-    task_date: "",
-    task_time: 0,
+const TaskEdit = ({
+  taskDescription,
+  taskDate,
+  taskTime,
+  taskUser,
+  userId,
+  handleEditTaskCancel,
+  handleDeleteTask,
+  handleEditANewTask,
+}) => {
+  const [editDataObject, setEditDataObject] = useState({
+    assigned_user: taskUser,
+    task_date: taskDate,
+    task_time: taskTime,
     is_completed: 0,
     time_zone: 19800,
-    task_msg: "Follow Up",
+    task_msg: taskDescription,
   });
-  const [desp, setDesp] = useState("Follow Up");
-  const [time, setTime] = useState("");
-  const [date, setDate] = useState("");
-  const [assigned, setAssigned] = useState("prem");
-  const handleAddDescriptions = (e) => {
+  const [desp, setDesp] = useState(taskDescription);
+  const [time, setTime] = useState(taskTime);
+  const [date, setDate] = useState(taskDate);
+  const [assigned, setAssigned] = useState(taskUser);
+  const handleEditDescriptions = (e) => {
     setDesp(e.target.value);
-    setAddDataObject({
+    setEditDataObject({
       assigned_user: assigned,
       task_date: date,
       task_time: time,
@@ -25,9 +33,9 @@ const TaskInputs = ({ handleAddTaskCancel, handleAddANewTask }) => {
       task_msg: e.target.value,
     });
   };
-  const handleAddDate = (e) => {
+  const handleEditDate = (e) => {
     setDate(e.target.value);
-    setAddDataObject({
+    setEditDataObject({
       assigned_user: assigned,
       task_date: e.target.value,
       task_time: time,
@@ -36,11 +44,11 @@ const TaskInputs = ({ handleAddTaskCancel, handleAddANewTask }) => {
       task_msg: desp,
     });
   };
-  const handleAddTime = (e) => {
+  const handleEditTime = (e) => {
     const timeArray = e.target.value.split(":");
     const seconds = timeArray[0] * 3600 + timeArray[1] * 60;
     setTime(seconds);
-    setAddDataObject({
+    setEditDataObject({
       assigned_user: assigned,
       task_date: date,
       task_time: seconds,
@@ -49,9 +57,9 @@ const TaskInputs = ({ handleAddTaskCancel, handleAddANewTask }) => {
       task_msg: desp,
     });
   };
-  const handleAddAssigned = (e) => {
+  const handleEditAssigned = (e) => {
     setAssigned(e.target.value);
-    setAddDataObject({
+    setEditDataObject({
       assigned_user: e.target.value,
       task_date: date,
       task_time: time,
@@ -61,20 +69,19 @@ const TaskInputs = ({ handleAddTaskCancel, handleAddANewTask }) => {
     });
   };
 
-  const handleOnAddWhole = () => {
-    handleAddANewTask(addDataObject);
+  const handleEdit = () => {
+    handleEditANewTask(userId, editDataObject);
   };
   return (
     <div className="taskInputContainer">
       <div className="taskDescriptionContainer">
         <label htmlFor="desp">Task Description</label>
         <input
-          defaultValue="Follow Up"
           id="inputBox"
-          className="descriptionBox"
+          defaultValue={taskDescription}
           type="text"
           name="desp"
-          onChange={handleAddDescriptions}
+          onChange={handleEditDescriptions}
         />
       </div>
       <div className="dateTimeContainer">
@@ -82,10 +89,11 @@ const TaskInputs = ({ handleAddTaskCancel, handleAddANewTask }) => {
           <label htmlFor="date">Date</label>
           <input
             id="dateTimeBox"
+            defaultValue={taskDate}
             placeholder="dd-mm-yyyy"
             type="date"
             name="date"
-            onChange={handleAddDate}
+            onChange={handleEditDate}
           />
         </div>
         <div className="timeContainer">
@@ -94,23 +102,29 @@ const TaskInputs = ({ handleAddTaskCancel, handleAddANewTask }) => {
             id="dateTimeBox"
             type="time"
             name="time"
-            onChange={handleAddTime}
+            onChange={handleEditTime}
           />
         </div>
       </div>
       <div className="userContainer">
         <label htmlFor="users">Assign User</label>
-        <select className="selectBox" name="users" onChange={handleAddAssigned}>
+        <select
+          className="selectBox"
+          defaultValue={taskUser}
+          name="users"
+          onChange={handleEditAssigned}
+        >
           <option value="prem">Prem Kumar</option>
           <option value="sayak">Sayak</option>
           <option value="subi">Subi</option>
         </select>
       </div>
       <div className="ButtonContainer">
-        <button className="cancelButton" onClick={handleAddTaskCancel}>
+        <button onClick={() => handleDeleteTask(userId)}>Delete</button>
+        <button className="cancelButton" onClick={handleEditTaskCancel}>
           Cancel
         </button>
-        <button className="saveButton" onClick={handleOnAddWhole}>
+        <button className="saveButton" onClick={handleEdit}>
           Save
         </button>
       </div>
@@ -118,4 +132,4 @@ const TaskInputs = ({ handleAddTaskCancel, handleAddANewTask }) => {
   );
 };
 
-export default TaskInputs;
+export default TaskEdit;
