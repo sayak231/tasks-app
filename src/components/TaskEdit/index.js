@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import TaskForm from "../TaskForm";
 
 const TaskEdit = ({
   taskDescription,
@@ -10,6 +11,18 @@ const TaskEdit = ({
   handleDeleteTask,
   handleEditANewTask,
 }) => {
+  let newDate = new Date();
+  let fulldate = [
+    newDate.getFullYear() < 10
+      ? [0, newDate.getFullYear()].join("")
+      : newDate.getFullYear(),
+    newDate.getMonth() + 1 < 10
+      ? [0, newDate.getMonth() + 1].join("")
+      : newDate.getMonth(),
+    newDate.getDate() < 10
+      ? [0, newDate.getDate()].join("")
+      : newDate.getDate(),
+  ].join("-");
   const [editDataObject, setEditDataObject] = useState({
     assigned_user: taskUser,
     task_date: taskDate,
@@ -20,6 +33,7 @@ const TaskEdit = ({
   });
   const [desp, setDesp] = useState(taskDescription);
   const [time, setTime] = useState(taskTime);
+  const [timeValue, setTimeValue] = useState(new Date());
   const [date, setDate] = useState(taskDate);
   const [assigned, setAssigned] = useState(taskUser);
   const handleEditDescriptions = (e) => {
@@ -44,14 +58,16 @@ const TaskEdit = ({
       task_msg: desp,
     });
   };
-  const handleEditTime = (e) => {
-    const timeArray = e.target.value.split(":");
-    const seconds = timeArray[0] * 3600 + timeArray[1] * 60;
-    setTime(seconds);
+  const handleEditTime = (localDate) => {
+    let timeStr = localDate.toString().split(" ")[4].split(":");
+    timeStr = timeStr.map((i) => Number(i));
+    const sec = timeStr[0] * 3600 + timeStr[1] * 60 + timeStr[2];
+    setTime(sec);
+    setTimeValue(localDate);
     setEditDataObject({
       assigned_user: assigned,
       task_date: date,
-      task_time: seconds,
+      task_time: sec,
       is_completed: 0,
       time_zone: 19800,
       task_msg: desp,
@@ -73,62 +89,22 @@ const TaskEdit = ({
     handleEditANewTask(userId, editDataObject);
   };
   return (
-    <div className="taskInputContainer">
-      <div className="taskDescriptionContainer">
-        <label htmlFor="desp">Task Description</label>
-        <input
-          id="inputBox"
-          defaultValue={taskDescription}
-          type="text"
-          name="desp"
-          onChange={handleEditDescriptions}
-        />
-      </div>
-      <div className="dateTimeContainer">
-        <div className="dateContainer">
-          <label htmlFor="date">Date</label>
-          <input
-            id="dateTimeBox"
-            defaultValue={taskDate}
-            placeholder="dd-mm-yyyy"
-            type="date"
-            name="date"
-            onChange={handleEditDate}
-          />
-        </div>
-        <div className="timeContainer">
-          <label htmlFor="time">Time</label>
-          <input
-            id="dateTimeBox"
-            type="time"
-            name="time"
-            onChange={handleEditTime}
-          />
-        </div>
-      </div>
-      <div className="userContainer">
-        <label htmlFor="users">Assign User</label>
-        <select
-          className="selectBox"
-          defaultValue={taskUser}
-          name="users"
-          onChange={handleEditAssigned}
-        >
-          <option value="prem">Prem Kumar</option>
-          <option value="sayak">Sayak</option>
-          <option value="subi">Subi</option>
-        </select>
-      </div>
-      <div className="ButtonContainer">
-        <button onClick={() => handleDeleteTask(userId)}>Delete</button>
-        <button className="cancelButton" onClick={handleEditTaskCancel}>
-          Cancel
-        </button>
-        <button className="saveButton" onClick={handleEdit}>
-          Save
-        </button>
-      </div>
-    </div>
+    <TaskForm
+      edit={true}
+      handleDescriptions={handleEditDescriptions}
+      handleDate={handleEditDate}
+      handleTime={handleEditTime}
+      timeValue={timeValue}
+      fulldate={fulldate}
+      handleAssigned={handleEditAssigned}
+      handleTaskCancel={handleEditTaskCancel}
+      handleSave={handleEdit}
+      taskDescription={taskDescription}
+      taskDate={taskDate}
+      taskUser={taskUser}
+      handleDeleteTask={handleDeleteTask}
+      userId={userId}
+    />
   );
 };
 

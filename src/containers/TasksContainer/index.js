@@ -6,6 +6,7 @@ import {
   putTasks,
   deleteTasks,
 } from "../../redux/actions/tasks-action";
+import "font-awesome/css/font-awesome.min.css";
 import TaskList from "../../components/TaskList";
 import TaskInputs from "../../components/TaskInputs";
 import TaskEdit from "../../components/TaskEdit";
@@ -95,28 +96,25 @@ const TasksContainer = () => {
 
   const handleDeleteTask = (id) => {
     dispatch(deleteTasks(id));
-    setAddTask(false);
-    setEditTask(false);
-    setTaskList(taskData?.length > 0);
+    handleEditTaskCancel();
   };
 
   const handleAddANewTask = (obj) => {
     dispatch(postTasks(obj));
-    setAddTask(false);
-    setEditTask(false);
-    setTaskList(taskData?.length > 0);
+    handleEditTaskCancel();
   };
 
   const handleEditANewTask = (id, obj) => {
     dispatch(putTasks(id, obj));
-    setAddTask(false);
-    setEditTask(false);
-    setTaskList(taskData?.length > 0);
+    handleEditTaskCancel();
   };
   return (
     <div className="tasksContainer">
       <div className="tasksHeaderContainer">
-        <span className="tasksHeader">{`TASKS ${taskData?.length}`}</span>
+        <span className="tasksHeader">
+          <span className="tasksCaption">TASKS</span>
+          <span className="taskLength">{taskData?.length}</span>
+        </span>
         <button className="plusButton" onClick={handleAddTask}>
           +
         </button>
@@ -135,7 +133,9 @@ const TasksContainer = () => {
         ) : null
       ) : (
         <div className="loading">
-          <h1>Loading...</h1>
+          <h1>
+            <i className="fa fa-spinner fa-spin spinner"></i>
+          </h1>
         </div>
       )}
 

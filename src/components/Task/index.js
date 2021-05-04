@@ -1,4 +1,5 @@
 import React from "react";
+import "font-awesome/css/font-awesome.min.css";
 import "./style.css";
 
 const Task = ({
@@ -34,10 +35,14 @@ const Task = ({
       </div>
       <div className="taskButtonContainer">
         <button className="editbutton taskbutton" onClick={handleEdit}>
-          Edit
+          <i className="fa fa-pencil"></i>
         </button>
-        <button className="delcancel taskbutton">Not</button>
-        <button className="delcancel taskbutton">SS</button>
+        <button className="delcancel taskbutton">
+          <i className="fa fa-bell"></i>
+        </button>
+        <button className="delcancel taskbutton">
+          <i className="fa fa-check"></i>
+        </button>
       </div>
     </div>
   );

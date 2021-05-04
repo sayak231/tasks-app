@@ -1,7 +1,19 @@
 import React, { useState } from "react";
-import "./style.css";
+import TaskForm from "../TaskForm";
 
 const TaskInputs = ({ handleAddTaskCancel, handleAddANewTask }) => {
+  let newDate = new Date();
+  let fulldate = [
+    newDate.getFullYear() < 10
+      ? [0, newDate.getFullYear()].join("")
+      : newDate.getFullYear(),
+    newDate.getMonth() + 1 < 10
+      ? [0, newDate.getMonth() + 1].join("")
+      : newDate.getMonth(),
+    newDate.getDate() < 10
+      ? [0, newDate.getDate()].join("")
+      : newDate.getDate(),
+  ].join("-");
   const [addDataObject, setAddDataObject] = useState({
     assigned_user: "prem",
     task_date: "",
@@ -12,6 +24,7 @@ const TaskInputs = ({ handleAddTaskCancel, handleAddANewTask }) => {
   });
   const [desp, setDesp] = useState("Follow Up");
   const [time, setTime] = useState("");
+  const [timeValue, setTimeValue] = useState(new Date());
   const [date, setDate] = useState("");
   const [assigned, setAssigned] = useState("prem");
   const handleAddDescriptions = (e) => {
@@ -36,14 +49,16 @@ const TaskInputs = ({ handleAddTaskCancel, handleAddANewTask }) => {
       task_msg: desp,
     });
   };
-  const handleAddTime = (e) => {
-    const timeArray = e.target.value.split(":");
-    const seconds = timeArray[0] * 3600 + timeArray[1] * 60;
-    setTime(seconds);
+  const handleAddTime = (localDate) => {
+    let timeStr = localDate.toString().split(" ")[4].split(":");
+    timeStr = timeStr.map((i) => Number(i));
+    const sec = timeStr[0] * 3600 + timeStr[1] * 60 + timeStr[2];
+    setTime(sec);
+    setTimeValue(localDate);
     setAddDataObject({
       assigned_user: assigned,
       task_date: date,
-      task_time: seconds,
+      task_time: sec,
       is_completed: 0,
       time_zone: 19800,
       task_msg: desp,
@@ -65,56 +80,17 @@ const TaskInputs = ({ handleAddTaskCancel, handleAddANewTask }) => {
     handleAddANewTask(addDataObject);
   };
   return (
-    <div className="taskInputContainer">
-      <div className="taskDescriptionContainer">
-        <label htmlFor="desp">Task Description</label>
-        <input
-          defaultValue="Follow Up"
-          id="inputBox"
-          className="descriptionBox"
-          type="text"
-          name="desp"
-          onChange={handleAddDescriptions}
-        />
-      </div>
-      <div className="dateTimeContainer">
-        <div className="dateContainer">
-          <label htmlFor="date">Date</label>
-          <input
-            id="dateTimeBox"
-            placeholder="dd-mm-yyyy"
-            type="date"
-            name="date"
-            onChange={handleAddDate}
-          />
-        </div>
-        <div className="timeContainer">
-          <label htmlFor="time">Time</label>
-          <input
-            id="dateTimeBox"
-            type="time"
-            name="time"
-            onChange={handleAddTime}
-          />
-        </div>
-      </div>
-      <div className="userContainer">
-        <label htmlFor="users">Assign User</label>
-        <select className="selectBox" name="users" onChange={handleAddAssigned}>
-          <option value="prem">Prem Kumar</option>
-          <option value="sayak">Sayak</option>
-          <option value="subi">Subi</option>
-        </select>
-      </div>
-      <div className="ButtonContainer">
-        <button className="cancelButton" onClick={handleAddTaskCancel}>
-          Cancel
-        </button>
-        <button className="saveButton" onClick={handleOnAddWhole}>
-          Save
-        </button>
-      </div>
-    </div>
+    <TaskForm
+      edit={false}
+      handleDescriptions={handleAddDescriptions}
+      handleDate={handleAddDate}
+      handleTime={handleAddTime}
+      timeValue={timeValue}
+      fulldate={fulldate}
+      handleAssigned={handleAddAssigned}
+      handleTaskCancel={handleAddTaskCancel}
+      handleSave={handleOnAddWhole}
+    />
   );
 };
 

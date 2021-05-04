@@ -24,6 +24,7 @@
 }
 .editbutton {
   margin: auto 10px;
+  cursor: pointer;
 }
 .delcancel {
   margin: auto;
@@ -31,4 +32,12 @@
 .taskbutton {
   height: 30px;
   width: 30px;
+}
+.delbutton {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.trashColor {
+  color: grey;
 }

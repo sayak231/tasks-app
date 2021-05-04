@@ -1,6 +1,6 @@
 .tasksContainer {
   height: auto;
-  width: 35%;
+  width: 30%;
   margin-left: 2vw;
   border: 1px solid #e0e0e0;
 }
@@ -9,6 +9,15 @@
   width: 100%;
   display: flex;
   background-color: rgb(246 246 246);
+}
+.tasksCaption {
+  letter-spacing: 2px;
+  font-size: 16px;
+  margin-right: 5px;
+}
+.taskLength {
+  font-size: 16px;
+  color: grey;
 }
 .loading {
   margin: "auto";
@@ -28,4 +37,8 @@
   font-size: 25px;
   color: #8c8c8c;
   cursor: pointer;
+}
+.spinner {
+  height: 50px;
+  width: 50px;
 }

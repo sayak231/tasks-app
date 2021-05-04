@@ -9,7 +9,6 @@ export function* watchGetTaskFromApi() {
 function* getTaskFromApi() {
   try {
     const data = yield call(getData);
-    console.log("yes");
     const { results, status, message } = data;
     if (status === "error") {
       yield put({
