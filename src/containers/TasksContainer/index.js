@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getUserId,
   getTasks,
   postTasks,
   putTasks,
@@ -13,6 +14,12 @@ import TaskEdit from "../../components/TaskEdit";
 import "./style.css";
 
 const TasksContainer = () => {
+  const userData = useSelector(
+    (state) => state.TasksReducer.getUser.results?.first
+  );
+  const loadingUserData = useSelector(
+    (state) => state.TasksReducer.getUser.loading
+  );
   const taskData = useSelector(
     (state) => state.TasksReducer.getTasksList.results
   );
@@ -41,6 +48,7 @@ const TasksContainer = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getUserId());
     dispatch(getTasks());
   }, [dispatch]);
 
@@ -119,7 +127,11 @@ const TasksContainer = () => {
           +
         </button>
       </div>
-      {!loadingGet && !loadingPost && !loadingPut && !loadingDelete ? (
+      {!loadingUserData &&
+      !loadingGet &&
+      !loadingPost &&
+      !loadingPut &&
+      !loadingDelete ? (
         taskList ? (
           <TaskList
             setTaskDescription={setTaskDescription}
@@ -141,12 +153,14 @@ const TasksContainer = () => {
 
       {addTask ? (
         <TaskInputs
+          userData={userData}
           handleAddANewTask={handleAddANewTask}
           handleAddTaskCancel={handleAddTaskCancel}
         />
       ) : null}
       {editTask ? (
         <TaskEdit
+          userData={userData}
           taskDescription={taskDescription}
           taskDate={taskDate}
           taskTime={taskTime}

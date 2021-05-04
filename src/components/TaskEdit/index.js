@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TaskForm from "../TaskForm";
 
 const TaskEdit = ({
+  userData,
   taskDescription,
   taskDate,
   taskTime,
@@ -24,7 +25,7 @@ const TaskEdit = ({
       : newDate.getDate(),
   ].join("-");
   const [editDataObject, setEditDataObject] = useState({
-    assigned_user: taskUser,
+    assigned_user: userData,
     task_date: taskDate,
     task_time: taskTime,
     is_completed: 0,
@@ -35,11 +36,10 @@ const TaskEdit = ({
   const [time, setTime] = useState(taskTime);
   const [timeValue, setTimeValue] = useState(new Date());
   const [date, setDate] = useState(taskDate);
-  const [assigned, setAssigned] = useState(taskUser);
   const handleEditDescriptions = (e) => {
     setDesp(e.target.value);
     setEditDataObject({
-      assigned_user: assigned,
+      assigned_user: userData,
       task_date: date,
       task_time: time,
       is_completed: 0,
@@ -50,7 +50,7 @@ const TaskEdit = ({
   const handleEditDate = (e) => {
     setDate(e.target.value);
     setEditDataObject({
-      assigned_user: assigned,
+      assigned_user: userData,
       task_date: e.target.value,
       task_time: time,
       is_completed: 0,
@@ -65,20 +65,9 @@ const TaskEdit = ({
     setTime(sec);
     setTimeValue(localDate);
     setEditDataObject({
-      assigned_user: assigned,
+      assigned_user: userData,
       task_date: date,
       task_time: sec,
-      is_completed: 0,
-      time_zone: 19800,
-      task_msg: desp,
-    });
-  };
-  const handleEditAssigned = (e) => {
-    setAssigned(e.target.value);
-    setEditDataObject({
-      assigned_user: e.target.value,
-      task_date: date,
-      task_time: time,
       is_completed: 0,
       time_zone: 19800,
       task_msg: desp,
@@ -91,12 +80,12 @@ const TaskEdit = ({
   return (
     <TaskForm
       edit={true}
+      userData={userData}
       handleDescriptions={handleEditDescriptions}
       handleDate={handleEditDate}
       handleTime={handleEditTime}
       timeValue={timeValue}
       fulldate={fulldate}
-      handleAssigned={handleEditAssigned}
       handleTaskCancel={handleEditTaskCancel}
       handleSave={handleEdit}
       taskDescription={taskDescription}

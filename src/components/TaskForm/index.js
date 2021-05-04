@@ -10,17 +10,16 @@ const engine = new Styletron();
 
 const TaskForm = ({
   edit,
+  userData,
   handleDescriptions,
   handleDate,
   handleTime,
   timeValue,
   fulldate,
-  handleAssigned,
   handleTaskCancel,
   handleSave,
   taskDescription,
   taskDate,
-  taskUser,
   handleDeleteTask,
   userId,
 }) => {
@@ -67,14 +66,8 @@ const TaskForm = ({
           </div>
           <div className="userContainer">
             <label htmlFor="users">Assign User</label>
-            <select
-              className="selectBox"
-              name="users"
-              onChange={handleAssigned}
-            >
-              <option value="prem">Prem Kumar</option>
-              <option value="sayak">Sayak</option>
-              <option value="subi">Subi</option>
+            <select className="selectBox" name="users">
+              <option value="prem">{userData}</option>
             </select>
           </div>
           <div className="ButtonContainer">
