@@ -1,5 +1,9 @@
 import * as types from "./action-types";
 
+export const getUserId = () => ({
+  type: types.GET_USER_ID,
+});
+
 export const getTasks = () => ({
   type: types.GET_TASKS,
 });

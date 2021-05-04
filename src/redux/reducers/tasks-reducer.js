@@ -1,6 +1,37 @@
 import { combineReducers } from "redux";
 import * as types from "../actions/action-types";
 
+const getUser = (state = { results: [] }, action) => {
+  switch (action.type) {
+    case types.GET_USER_ID_FAIL:
+      return {
+        ...state,
+        results: action.results,
+        message: action.message,
+        status: action.status,
+        loading: false,
+      };
+    case types.GET_USER_ID_SUCCESS:
+      return {
+        ...state,
+        results: action.results,
+        message: action.message,
+        status: action.status,
+        loading: false,
+      };
+    case types.GET_USER_ID:
+      return {
+        ...state,
+        results: action.results,
+        message: action.message,
+        status: action.status,
+        loading: true,
+      };
+    default:
+      return { ...state };
+  }
+};
+
 const getTasksList = (state = { results: [] }, action) => {
   switch (action.type) {
     case types.GET_TASKS_FAIL:
@@ -123,6 +154,7 @@ const deleteTasksList = (state = { results: [] }, action) => {
 };
 
 export default combineReducers({
+  getUser,
   getTasksList,
   postTasksList,
   putTasksList,

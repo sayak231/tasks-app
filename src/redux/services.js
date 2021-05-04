@@ -11,6 +11,17 @@ const headers = {
 const url =
   "https://stage.api.sloovi.com/task/lead_58be137bfde045e7a0c8d107783c4598";
 
+export const getUserId = async () => {
+  try {
+    const data = await axios.get("https://stage.api.sloovi.com/user", {
+      headers,
+    });
+    return data.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
 export const getData = async () => {
   try {
     const data = await axios.get(url, {
