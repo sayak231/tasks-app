@@ -12,7 +12,7 @@ const TaskEdit = ({
   handleDeleteTask,
   handleEditANewTask,
 }) => {
-  let newDate = new Date();
+  let newDate = new Date((taskTime - 19800) * 1000);
   let fulldate = [
     newDate.getFullYear() < 10
       ? [0, newDate.getFullYear()].join("")
@@ -34,7 +34,9 @@ const TaskEdit = ({
   });
   const [desp, setDesp] = useState(taskDescription);
   const [time, setTime] = useState(taskTime);
-  const [timeValue, setTimeValue] = useState(new Date());
+  const [timeValue, setTimeValue] = useState(
+    new Date((taskTime - 19800) * 1000)
+  );
   const [date, setDate] = useState(taskDate);
   const handleEditDescriptions = (e) => {
     setDesp(e.target.value);
